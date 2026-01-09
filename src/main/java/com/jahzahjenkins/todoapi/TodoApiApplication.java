@@ -1,4 +1,4 @@
-package com.jahzahjenkins.todo_api;
+package com.jahzahjenkins.todoapi;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

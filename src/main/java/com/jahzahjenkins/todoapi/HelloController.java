@@ -1,4 +1,4 @@
-package com.jahzahjenkins.todo_api;
+package com.jahzahjenkins.todoapi;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

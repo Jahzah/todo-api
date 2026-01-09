@@ -26,7 +26,7 @@ public class TodoController {
     
     // GET single todo by ID
     @GetMapping("/{id}")
-    public ResponseEntity<Todo> getTodoById(@PathVariable String id) {
+    public ResponseEntity<Todo> getTodoById(@PathVariable Long id) {
         Optional<Todo> todo = todoService.getTodoById(id);
         return todo.map(ResponseEntity::ok)
                    .orElse(ResponseEntity.notFound().build());
@@ -49,7 +49,7 @@ public class TodoController {
     // UPDATE existing todo
     @PutMapping("/{id}")
     public ResponseEntity<Todo> updateTodo(
-            @PathVariable String id,
+            @PathVariable Long id,
             @RequestBody Map<String, Object> updates) {
         
         String title = (String) updates.get("title");
@@ -64,7 +64,7 @@ public class TodoController {
     
     // DELETE todo
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteTodo(@PathVariable String id) {
+    public ResponseEntity<Void> deleteTodo(@PathVariable Long id) {
         boolean deleted = todoService.deleteTodo(id);
         
         if (deleted) {
@@ -76,7 +76,7 @@ public class TodoController {
     
     // PATCH - Mark as complete
     @PatchMapping("/{id}/complete")
-    public ResponseEntity<Todo> completeTodo(@PathVariable String id) {
+    public ResponseEntity<Todo> completeTodo(@PathVariable Long id) {
         Optional<Todo> updated = todoService.completeTodo(id);
         
         return updated.map(ResponseEntity::ok)

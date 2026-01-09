@@ -1,36 +1,54 @@
 package com.jahzahjenkins.todoapi.model;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
+import jakarta.persistence.*;
 
+
+@Entity
+@Table(name = "todos")
 public class Todo {
-    private String id;
+	@Id 
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+	
+	@Column(nullable = false)
     private String title;
+	
+	@Column(length = 1000)
     private String description;
-    private boolean completed;
+    
+    @Column(nullable = false)
+    private boolean completed = false;
+    
+    @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
+    
+    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    // Constructor
     public Todo() {
-        this.id = UUID.randomUUID().toString();
-        this.completed = false;
-        this.createdAt = LocalDateTime.now();
-        this.updatedAt = LocalDateTime.now();
+    	this.createdAt = LocalDateTime.now();
+    	this.updatedAt = LocalDateTime.now();
+        
     }
 
     public Todo(String title, String description) {
-        this();
+    	this();
         this.title = title;
         this.description = description;
     }
-
+    
+    @PreUpdate
+    protected void onUpdate() {
+    	this.updatedAt = LocalDateTime.now();
+    }
+    
     // Getters and Setters
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
