@@ -2,7 +2,8 @@ package com.jahzahjenkins.todoapi.model;
 
 import java.time.LocalDateTime;
 import jakarta.persistence.*;
-
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "todos")
@@ -11,9 +12,12 @@ public class Todo {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 	
+	@NotBlank(message = "Title is required")
+	@Size(min = 1, max = 100, message = "Title must be between 1 and 100 characters")
 	@Column(nullable = false)
     private String title;
 	
+	@Size(max = 500, message = "Description cannot exceed 500 characters")
 	@Column(length = 1000)
     private String description;
     

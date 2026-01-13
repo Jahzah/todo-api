@@ -1,5 +1,6 @@
 package com.jahzahjenkins.todoapi.service;
 
+import com.jahzahjenkins.todoapi.exception.TodoNotFoundException;
 import com.jahzahjenkins.todoapi.model.Todo;
 import com.jahzahjenkins.todoapi.repository.TodoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,36 +27,34 @@ public class TodoService {
     }
 
     // Get a specific todo by ID
-    public Optional<Todo> getTodoById(Long id) {
-        return todoRepository.findById(id);
+    public Todo getTodoById(Long id) {
+    	return todoRepository.findById(id)
+        .orElseThrow(() -> new TodoNotFoundException(id));
     }
 
     // Update a todo
-    public Optional<Todo> updateTodo(Long id, String title, String description, Boolean completed) {
-        Optional<Todo> todoOptional = todoRepository.findById(id);
+    public Todo updateTodo(Long id, String title, String description, Boolean completed) {
+        Todo todo = todoRepository.findById(id)
+            .orElseThrow(() -> new TodoNotFoundException(id));
         
-        if (todoOptional.isPresent()) {
-            Todo todo = todoOptional.get();
-            if (title != null) todo.setTitle(title);
-            if (description != null) todo.setDescription(description);
-            if (completed != null) todo.setCompleted(completed);
-            return Optional.of(todoRepository.save(todo));
-        }
+        if (title != null) todo.setTitle(title);
+        if (description != null) todo.setDescription(description);
+        if (completed != null) todo.setCompleted(completed);
         
-        return Optional.empty();
+        return todoRepository.save(todo);
     }
 
     // Delete a todo
-    public boolean deleteTodo(Long id) {
-    	if (todoRepository.existsById(id)) {
-    		todoRepository.deleteById(id);
-    		return true;
-    	}
-        return false;
+    public void deleteTodo(Long id) {
+        if (!todoRepository.existsById(id)) {
+            throw new TodoNotFoundException(id);
+        }
+        todoRepository.deleteById(id);
     }
 
+
     // Mark todo as complete
-    public Optional<Todo> completeTodo(Long id) {
+    public Todo completeTodo(Long id) {
         return updateTodo(id, null, null, true);
     }
 }
