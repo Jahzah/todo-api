@@ -3,6 +3,7 @@ package com.jahzahjenkins.todoapi.controller;
 import com.jahzahjenkins.todoapi.model.Todo;
 import com.jahzahjenkins.todoapi.service.TodoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -67,5 +68,31 @@ public class TodoController {
         Todo updated = todoService.completeTodo(id);
         
         return ResponseEntity.ok(updated);
+    }
+    
+    @GetMapping("/filter")
+    public ResponseEntity<List<Todo>> filterTodos(@RequestParam Boolean completed) {
+        List<Todo> todos = todoService.getTodosByCompleted(completed);
+        return ResponseEntity.ok(todos);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<Todo>> searchTodos(@RequestParam String keyword) {
+        List<Todo> todos = todoService.searchTodosByTitle(keyword);
+        return ResponseEntity.ok(todos);
+    }
+
+    @GetMapping("/sorted")
+    public ResponseEntity<List<Todo>> getSortedTodos() {
+        List<Todo> todos = todoService.getAllTodosSortedByDate();
+        return ResponseEntity.ok(todos);
+    }
+    
+    @GetMapping("/paginated")
+    public ResponseEntity<Page<Todo>> getTodosPaginated(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size) {
+        Page<Todo> todos = todoService.getTodosPaginated(page, size);
+        return ResponseEntity.ok(todos);
     }
 }

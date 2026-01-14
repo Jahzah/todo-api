@@ -5,9 +5,12 @@ import com.jahzahjenkins.todoapi.model.Todo;
 import com.jahzahjenkins.todoapi.repository.TodoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class TodoService {
@@ -56,5 +59,22 @@ public class TodoService {
     // Mark todo as complete
     public Todo completeTodo(Long id) {
         return updateTodo(id, null, null, true);
+    }
+    
+    public List<Todo> getTodosByCompleted(Boolean completed) {
+        return todoRepository.findByCompleted(completed);
+    }
+
+    public List<Todo> searchTodosByTitle(String keyword) {
+        return todoRepository.findByTitleContainingIgnoreCase(keyword);
+    }
+
+    public List<Todo> getAllTodosSortedByDate() {
+        return todoRepository.findAllByOrderByCreatedAtDesc();
+    }
+    
+    public Page<Todo> getTodosPaginated(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
+        return todoRepository.findAll(pageable);
     }
 }
