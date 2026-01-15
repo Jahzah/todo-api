@@ -1,4 +1,4 @@
-package com.jahzahjenkins.todo_api;
+package com.jahzahjenkins.todoapi;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
