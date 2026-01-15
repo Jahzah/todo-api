@@ -10,7 +10,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import java.util.Optional;
-import com.jahzahjenkins.todoapi.service.TodoService;
 import com.jahzahjenkins.todoapi.repository.TodoRepository;
 import com.jahzahjenkins.todoapi.model.Todo;
 import com.jahzahjenkins.todoapi.exception.TodoNotFoundException;
