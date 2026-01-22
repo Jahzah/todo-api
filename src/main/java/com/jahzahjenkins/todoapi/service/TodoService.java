@@ -1,16 +1,17 @@
 package com.jahzahjenkins.todoapi.service;
 
-import com.jahzahjenkins.todoapi.exception.TodoNotFoundException;
-import com.jahzahjenkins.todoapi.model.Todo;
-import com.jahzahjenkins.todoapi.repository.TodoRepository;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.jahzahjenkins.todoapi.exception.TodoNotFoundException;
+import com.jahzahjenkins.todoapi.model.Todo;
+import com.jahzahjenkins.todoapi.repository.TodoRepository;
 
 @Service
 public class TodoService {

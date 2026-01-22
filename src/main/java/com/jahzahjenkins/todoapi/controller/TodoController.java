@@ -1,17 +1,18 @@
 package com.jahzahjenkins.todoapi.controller;
 
-import com.jahzahjenkins.todoapi.model.Todo;
-import com.jahzahjenkins.todoapi.service.TodoService;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.jahzahjenkins.todoapi.model.Todo;
+import com.jahzahjenkins.todoapi.service.ChatService;
+import com.jahzahjenkins.todoapi.service.TodoService;
+
 import jakarta.validation.Valid;
-
-
-import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/todos")
@@ -19,6 +20,9 @@ public class TodoController {
     
     @Autowired
     private TodoService todoService;
+    
+    @Autowired
+    private ChatService chatService;
     
     // GET all todos
     @GetMapping
@@ -94,5 +98,11 @@ public class TodoController {
             @RequestParam(defaultValue = "5") int size) {
         Page<Todo> todos = todoService.getTodosPaginated(page, size);
         return ResponseEntity.ok(todos);
+    }
+    
+    @PostMapping("/suggestions")
+    public ResponseEntity<String> getTodoSuggestions(@RequestBody String userGoal) {
+        String suggestions = chatService.generateTodoSuggestions(userGoal);
+        return ResponseEntity.ok(suggestions);
     }
 }
