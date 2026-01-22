@@ -17,8 +17,8 @@ A RESTful API for managing todo tasks built with Spring Boot and PostgreSQL.
 - ✅ Pagination and sorting
 - ✅ Search functionality
 - ✅ Comprehensive unit and integration tests
-- 🔄 API documentation with Swagger (in progress)
-- 🔄 AI-powered suggestions (in progress)
+- ✅ API documentation with Swagger/SpringDoc
+- ✅ AI-powered todo suggestions using OpenAI GPT-3.5
 
 ## API Endpoints
 
@@ -30,6 +30,7 @@ A RESTful API for managing todo tasks built with Spring Boot and PostgreSQL.
 | PUT | `/api/todos/{id}` | Update todo |
 | DELETE | `/api/todos/{id}` | Delete todo |
 | GET | `/api/todos/search?query={query}` | Search todos |
+| POST | `/api/todos/suggestions` | Generate AI todo suggestions |
 
 ## Setup Instructions
 
